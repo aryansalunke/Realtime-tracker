@@ -25,7 +25,7 @@ const colorNames = {
 };
 
 // Connect to local MongoDB
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_PUBLIC_URL)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
