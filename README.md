@@ -45,15 +45,3 @@ Start the server:
 node app.js
 
 Open http://localhost:3000 in your browser.
-
-## Project Structure
-
-reartime_tracker/
-├── models/
-│   └── Session.js       # Mongoose schema for session data
-├── public/
-│   ├── css/style.css    # Styles including login card and map markers
-│   └── js/script.js     # Frontend logic, GPS, socket events, Leaflet map
-├── views/
-│   └── index.ejs        # Main HTML page with login screen and map
-└── app.js               # Express server, Socket.IO events, MongoDB writes
