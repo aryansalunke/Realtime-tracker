@@ -1,57 +1,59 @@
 # Real-Time Location Tracker
 
-A full-stack web app where multiple users can see each other's live location on a shared map in real time.
+A full-stack web app where multiple people can see each other's live location on a shared map in real time.
+
+## Live Demo
+
+https://realtime-tracker-production-8f3e.up.railway.app
+
+Open the link on any device, enter your name, pick a color, and hit Join. Share the same link with someone else and watch each other's markers move in real time.
 
 ## What it does
 
-- Users enter their name and pick a color before joining
-- Each user's GPS coordinates are broadcast live to everyone on the map
-- Markers move in real time as people move
-- Map stays static under your control, only the markers update
-- Sessions are stored in MongoDB with join time, disconnect time, and last known location
-- Works on mobile browsers over HTTPS
+- Each user enters a name and picks a color before joining
+- Your GPS location is tracked continuously and broadcast to everyone on the map
+- Every user appears as a named, color-coded marker that moves as they move
+- The map stays static under your control, only the markers update
+- When someone leaves, their marker is removed automatically
+- Session data (name, color, join time, disconnect time, last known location) is stored in MongoDB
 
 ## Tech Stack
 
-**Backend:** Node.js, Express.js, Socket.IO, Mongoose
-**Frontend:** HTML, CSS, Vanilla JavaScript, EJS
-**Database:** MongoDB
-**Map:** Leaflet.js, OpenStreetMap
+- **Backend** — Node.js, Express, Socket.IO
+- **Frontend** — HTML, CSS, Vanilla JavaScript, EJS
+- **Database** — MongoDB, Mongoose
+- **Map** — Leaflet.js, OpenStreetMap
+- **Hosting** — Railway
 
-## How to run locally
+## Run locally
 
-1. Make sure MongoDB is running on your machine
-2. Clone the repo
+Clone the repo:
 
-```bash
-   git clone https://github.com/aryansalunke/Realtime-tracker.git
-   cd Realtime-tracker
-```
+git clone https://github.com/aryansalunke/Realtime-tracker.git
+cd Realtime-tracker
 
-3. Install dependencies
+Install dependencies:
 
-```bash
-   npm install
-```
+npm install
 
-4. Start the server
+Add a .env file in the root:
 
-```bash
-   node app.js
-```
+MONGO_PUBLIC_URL=your_mongodb_connection_string
 
-5. Open `http://localhost:3000` in your browser
+Start the server:
 
-## To test on a real phone (HTTPS required)
+node app.js
 
-Run ngrok in a second terminal:
+Open http://localhost:3000 in your browser.
 
-```bash
-ngrok http 3000
-```
+## Project Structure
 
-Share the `https://` URL with others. Everyone who opens it joins the same live map.
-
-## How sessions are stored
-
-Every time a user joins, one document is created in MongoDB with their name, color, join time, and coordinates. On every location update only the `lastSeen` field is overwritten, not a new document, so the database never bloats. When the user disconnects, a `leftAt` timestamp is stamped on that document.
+reartime_tracker/
+├── models/
+│   └── Session.js       # Mongoose schema for session data
+├── public/
+│   ├── css/style.css    # Styles including login card and map markers
+│   └── js/script.js     # Frontend logic, GPS, socket events, Leaflet map
+├── views/
+│   └── index.ejs        # Main HTML page with login screen and map
+└── app.js               # Express server, Socket.IO events, MongoDB writes
